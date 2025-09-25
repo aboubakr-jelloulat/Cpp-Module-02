@@ -2,8 +2,8 @@
 
 class Fixed
 {
-	int	_value;
-	static const int _fractional = 8;
+	int	_raw;
+	static const int _fractionalBits = 8;
  
 public : 
 	Fixed();
