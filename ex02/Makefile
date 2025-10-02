@@ -1,4 +1,4 @@
-NAME    := fixed
+NAME    := overloading
 CC      := c++
 CFLAGS  := -Wall -Wextra -Werror -std=c++98
 

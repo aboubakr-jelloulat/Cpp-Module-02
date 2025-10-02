@@ -18,7 +18,6 @@ Fixed& Fixed::operator=(const Fixed& other)
 		this->_raw = other.getRawBits();
 
 	return *this;
-
 }
 
 int	Fixed::getRawBits( void ) const

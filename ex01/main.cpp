@@ -1,5 +1,7 @@
 #include "Fixed.h"
 #include <iostream>
+#include <iomanip>
+
 
 
 
@@ -17,7 +19,7 @@ int main( void )
 	std::cout << "c is " << c << std::endl;
 	std::cout << "d is " << d << std::endl;
 
-	std::cout << "a is " << a.toInt() << " as integer" << std::endl;
+	std::cout << "a is " << a.toInt() << " as integer" << std::endl; 
 	std::cout << "b is " << b.toInt() << " as integer" << std::endl;
 	std::cout << "c is " << c.toInt() << " as integer" << std::endl;
 	std::cout << "d is " << d.toInt() << " as integer" << std::endl;
@@ -25,3 +27,7 @@ int main( void )
 
 	return 0;
 }
+
+// By default, std::cout only shows 6 significant digits total for floating-point numbers
+
+// std::cout << "a is " << std::setprecision(8) << a << std::endl;

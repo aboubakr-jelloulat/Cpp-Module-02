@@ -30,7 +30,7 @@ Fixed::Fixed(int const i)
 	std::cout << "Int constructor called" << std::endl;
 	this->_raw = i << _fractionalBits;  // * 256 
 
-	//std::cout << this->_raw << std::endl;
+	// std::cout << this->_raw << std::endl; // 2560
 }
 
 Fixed::Fixed(float const f) 
@@ -38,6 +38,7 @@ Fixed::Fixed(float const f)
 	std::cout << "Float constructor called" << std::endl;
 
 	this->_raw = roundf(f * (1 << _fractionalBits));
+
 	// this->_raw = roundf(f * 256);
 
 	//std::cout << f * (1 << _fractionalBits) << std::endl;
@@ -49,14 +50,16 @@ Fixed::Fixed(float const f)
 
 }
 
+// converting FROM fixed-point TO IEEE 754 floating-point.
 float Fixed::toFloat(void) const 
 {
+	// Convert by dividing by 2^fractionalBits
     return static_cast<float>(this->_raw) / (1 << _fractionalBits);
 }
 
 int Fixed::toInt(void) const 
 {
-    return this->_raw >> _fractionalBits; // like / 256
+    return this->_raw >> _fractionalBits;
 }
 
 
@@ -86,14 +89,19 @@ std::ostream& operator<<(std::ostream& out, Fixed const &f) {return out << f.toF
 
 /*
 
+	Fixed Point :
+		Fixed point is a representation method (or format) for storing and displaying numbers in computers.
+		In fixed point representation, you decide in advance how many digits go before and after the decimal point, and it never changes.
+
 	Why Use Fixed-Point?
+
 		Problem: Computers are bad at handling decimal numbers accurately with normal floats
 
 		float a = 0.1;
 		float b = 0.2;
 		float c = a + b;  // Should be 0.3, but often gives 0.30000000000000004
 
-		=> Solution: Fixed-point uses integers to represent decimals for perfect accuracy!
+		=> Solution: Fixed point uses integers to represent decimals for perfect accuracy
 
 
 
@@ -170,7 +178,8 @@ std::ostream& operator<<(std::ostream& out, Fixed const &f) {return out << f.toF
 
 		
 		1. toFloat()
-			Converts fixed-point back to float (with decimals)
+			Converts fixed-point back to float (with decimals)\
+			//converting FROM fixed-point TO IEEE 754 floating-point
 			1 << _fractionalBits) = 1 << 8 = 256 (our scaling factor)
 			static_cast<float>(this->_raw) = convert integer to float (so we get decimal division)
 			
@@ -196,47 +205,6 @@ std::ostream& operator<<(std::ostream& out, Fixed const &f) {return out << f.toF
 				int result = num.toInt();
 				Calculation: 2813 >> 8 = 10 (drops the 0.99) ✓
 
-
-
-
-	Questions
-			1: Why Use << >> Shifting Instead of Multiply/Divide?
-				Answer: SPEED! ⚡
-				Bit shifting is much faster than multiplication/division!
-
-				Computer Hardware Fact:
-
-				Bit shift: 1 clock cycle (just move bits)
-
-				Multiplication/Division: 10-40 clock cycles (complex calculation)
-
-
-			2 : Why Use roundf() Instead of Direct Multiplication?
-				Answer: PRECISION! 🎯
-				Example Without Rounding:
-	
-				float f = 3.14159f;
-				this->_raw = f * 256;   Without rounding
-
-				What happens:
-				3.14159 × 256 = 804.24704
-				But _raw is an INT, so it TRUNCATES to 804
-				Later: 804 ÷ 256 = 3.140625 (we lost 0.000965!)
-
-
-			float f = 3.14159f;  
-			this->_raw = roundf(f * 256);  With rounding
-
-				What happens:
-				3.14159 × 256 = 804.24704
-				roundf(804.24704) = 804
-				Later: 804 ÷ 256 = 3.140625 (same result, but...)
-
-
-
-			Wait, Same Result? So Why Round? !!!! 
-
-			Rounding helps with EDGE CASES!
-
 			
 */
+
