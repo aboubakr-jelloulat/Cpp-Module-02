@@ -89,13 +89,6 @@ int main(void)
 
 
 
-c
-
-
-
-
-
-
 /* 
 	Test Point OUTSIDE Triangle
 
@@ -191,9 +184,9 @@ c
 
 
 
-	Point p1(42.2, 19.5);
-	Point p2(13.3, 19.5);
-	p1 = p2;
+	// Point p1(42.2, 19.5);
+	// Point p2(13.3, 19.5);
+	// p1 = p2;
 
 
 	std::cout << "\nCongrats " << std::endl;
